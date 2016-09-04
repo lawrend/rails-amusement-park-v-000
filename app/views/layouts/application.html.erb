@@ -24,6 +24,14 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
            <!--  nav here -->
+          <% if current_user %>
+            <a class="navbar-brand" href="<%= user_path(current_user) %>"/>Hello, <%=current_user.name%>!</a>
+            <a class="navbar-brand" href="<%= attractions_path %>"/>Attractions</a>
+            <a class="navbar-brand" href="<%= logout_path %>"/>Log Out</a>
+          <% else %>
+            <a class="navbar-brand" href="<%= signin_path %>"/>Sign In</a>
+            <a class="navbar-brand" href="<%= new_user_path %>"/>Sign Up</a>
+          <% end %>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -31,6 +39,9 @@
 
     <!-- content -->
     <div class="container"  role="main">
+    <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
       <%= yield %>
     </div>
 
